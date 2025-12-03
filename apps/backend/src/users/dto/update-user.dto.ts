@@ -10,8 +10,8 @@ import { CreateUserDto } from './create-user.dto';
  * Use case:
  * - When updating a user, you may only want to provide
  *   some fields (e.g., just the email or just the name).
- * - `PartialType` automatically marks all fields from
- *   `CreateUserDto` as optional, so you don’t need to
+ * - PartialType automatically marks all fields from
+ *   CreateUserDto as optional, so you don’t need to
  *   redefine them manually.
  */
 export class UpdateUserDto extends PartialType(CreateUserDto) {}
