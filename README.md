@@ -1,8 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Got it.
+Here is a **simple, clean, non-fancy README** with **what the project is for**, **how to run it**, and **future direction** — no project structure, no badges, no fancy visuals.
 
-## Getting Started
+---
 
-First, run the development server:
+# **AdhyayanX — AI-Powered Teaching Assistant (v1)**
+
+AdhyayanX is an AI-driven platform designed to help coaching institutes and teachers automate their daily academic operations.
+The goal of this project is to streamline tasks such as:
+
+* Generating class notes
+* Creating revision material
+* Planning next-day lessons
+* Preparing daily student reports
+* Mapping and tracking syllabus progress
+
+**v1 is built entirely using Next.js** to move fast and keep everything in a single codebase.
+The architecture is intentionally simple but structured so that heavy processing tasks can be moved to separate services in future versions.
+
+---
+
+## **Getting Started**
+
+Run the development server:
 
 ```bash
 npm run dev
@@ -14,23 +33,17 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the project by modifying files inside the `app/` directory.
+Changes will automatically refresh in the browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## **About This Build**
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* Built with **Next.js (App Router)**
+* Uses **Prisma + PostgreSQL** for data
+* Includes basic API routes for early features
+* Designed to be extendable as the platform grows
+* Future versions may introduce dedicated backend services (NestJS) for tasks like PDF processing, search indexing, and authentication, but **v1 stays fully monolithic on Next.js** for speed and simplicity.
