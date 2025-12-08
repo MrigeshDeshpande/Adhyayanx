@@ -1,5 +1,3 @@
-Got it.
-Here is a **simple, clean, non-fancy README** with **what the project is for**, **how to run it**, and **future direction** — no project structure, no badges, no fancy visuals.
 
 ---
 
