@@ -1,196 +1,36 @@
-*AdhyayanX is an AI-powered Teacher Assistant designed for coaching institutes and educators. It automates the entire academic workflow — starting with PDF-first content processing - to generate:*
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-* Class notes
-* Revision materials
-* Next-day teaching plans
-* Daily student reports
-* Syllabus tracking & progress mapping
+## Getting Started
 
-Built using a modern **React + NestJS + AI + Vector Search** architecture, AdhyayanX converts uploaded PDFs into actionable, high-quality teaching outputs that save teachers hours every day.
+First, run the development server:
 
-
-## **Core Features**
-
-* **PDF Upload & Parsing**
-  Upload PDFs and automatically extract structured content using advanced text-processing.
-
-* **AI-Generated Notes & Summaries**
-  Create clean, student-friendly notes directly from source material.
-
-* **Automated Revision Sheets**
-  Smart revision content generated from extracted concepts.
-
-* **Next-Day Class Plans**
-  AI plans your next class using your syllabus coverage + uploaded materials.
-
-* **Daily Reports for Institutes**
-  Auto-generated reports summarizing topics taught, student progress, and upcoming tasks.
-
-* **RAG-based Question Answering**
-  Ask questions about any uploaded PDF, using Retrieval-Augmented Generation.
-
-* **Teacher Dashboard**
-  View documents, job statuses, generated content, and analytics.
-
-## **Tech Stack**
-
-### **Frontend**
-
-* React (Vite + TypeScript)
-* Tailwind CSS
-* React Query / Axios (API communication)
-* Supabase Auth or custom JWT
-
-### **Backend**
-
-* NestJS (TypeScript)
-* BullMQ + Upstash Redis for async workers
-* Python (PyMuPDF) for PDF text extraction
-* Prisma ORM
-* Postgres (Neon / Supabase)
-
-### **AI & Vector Search**
-
-* OpenAI Embeddings / Local Embeddings (Ollama)
-* Qdrant Vector Database
-* Retrieval-Augmented Generation pipeline
-
-### **Storage**
-
-* Supabase Storage / S3 compatible layer
-* Direct PDF uploads using presigned URLs
-
-## **Features Under Development**
-
-* OCR for scanned PDFs
-* Multi-teacher collaboration
-* Multi-tenant institute system
-* Editable notes inside dashboard
-* Auto-generated progress trackers
-* Offline-first mobile experience (PWA)
-
----
-
-## **Project Structure**
-
-```
-adhyayanx/
-│
-├── apps/
-│   ├── frontend/        # React (Vite) web app
-│   ├── backend/         # NestJS API server
-│   ├── worker/          # BullMQ worker
-│   └── extractor/       # Python PDF extraction service
-│
-├── infra/
-│   ├── docker/          # Docker & infra configs
-│   ├── scripts/         # Deployment helpers
-│   └── env/             # env.example + templates
-│
-├── docs/
-│   ├── architecture/    # System diagrams + flows
-│   ├── api/             # OpenAPI spec
-│   └── onboarding.md    # Dev onboarding guide
-│
-└── README.md
-```
----
-
-### **1. Clone the repository**
-
-```sh
-git clone https://github.com/MrigeshDeshpande/adhyayanx.git
-cd adhyayanx
-```
-
-
-### **2. Install dependencies**
-
-Frontend:
-
-```sh
-cd apps/frontend
-npm install
-```
-
-Backend:
-
-```sh
-cd apps/backend
-npm install
-```
-
-Worker:
-
-```sh
-cd apps/worker
-npm install
-```
-
-Extractor:
-
-```sh
-cd apps/extractor
-pip install -r requirements.txt
-```
-
-
-### **3. Start servers**
-
-Frontend:
-
-```sh
+```bash
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-Backend:
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```sh
-npm run start:dev
-```
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-Worker:
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-```sh
-npm run start
-```
+## Learn More
 
-Extractor (Python):
+To learn more about Next.js, take a look at the following resources:
 
-```sh
-python src/main.py
-```
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-##  **How the Pipeline Works**
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-1. Teacher uploads a PDF → goes to Supabase Storage
-2. Backend creates a PDF record + enqueues processing job
-3. Worker fetches the PDF → sends to Python extractor
-4. Extractor returns chunks → backend embeds them
-5. Embeddings stored in Qdrant
-6. User asks a question → system retrieves best chunks
-7. RAG pipeline creates accurate AI answers
-8. Notes / summaries / reports generated on demand
+## Deploy on Vercel
 
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-##  **Roadmap**
-
-* [ ] Real-time collaborative notes editor
-* [ ] Full syllabus mapping engine
-* [ ] Institute admin dashboards
-* [ ] AI-powered test paper generator
-* [ ] Student performance analytics
-* [ ] Roles & permissions (Admin/Teacher/Staff)
-
-
-
-## **Contributing**
-
-We welcome contributions from developers interested in AI, education tech, or full-stack engineering.
-Open an issue or submit a PR with clear descriptions.
-
-<!--## License
-
-MIT License © 2025 AdhyayanX
-
--->
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
