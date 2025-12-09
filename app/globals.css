@@ -1,26 +1,125 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.625rem;
+  
+  /* Light Mode - Beige/Cream theme */
+  --background: #f5f5f0;  /* Light off-white/gray */
+  --foreground: #1a1a1a;  /* Near black for text */
+  --card: #ebe8de;  /* Beige/cream */
+  --card-foreground: #1a1a1a;
+  --popover: #ebe8de;
+  --popover-foreground: #1a1a1a;
+  --primary: #a89f91;  /* Brown/taupe */
+  --primary-foreground: #ffffff;
+  --secondary: #d4cfc4;  /* Light taupe */
+  --secondary-foreground: #1a1a1a;
+  --muted: #d4cfc4;
+  --muted-foreground: #6b6b6b;
+  --accent: #a89f91;
+  --accent-foreground: #ffffff;
+  --destructive: #c44e4e;
+  --border: #d4cfc4;
+  --input: #d4cfc4;
+  --ring: #a89f91;
+  --chart-1: #a89f91;
+  --chart-2: #8b8375;
+  --chart-3: #6b6b6b;
+  --chart-4: #d4cfc4;
+  --chart-5: #ebe8de;
+  --sidebar: #ebe8de;
+  --sidebar-foreground: #1a1a1a;
+  --sidebar-primary: #a89f91;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #d4cfc4;
+  --sidebar-accent-foreground: #1a1a1a;
+  --sidebar-border: #d4cfc4;
+  --sidebar-ring: #a89f91;
+}
+
+.dark {
+  /* Dark Mode - Black/Brown theme */
+  --background: #0a0a0a;  /* Pure black */
+  --foreground: #ebe8de;  /* Beige for text */
+  --card: #1a1a1a;  /* Dark gray/black */
+  --card-foreground: #ebe8de;
+  --popover: #1a1a1a;
+  --popover-foreground: #ebe8de;
+  --primary: #a89f91;  /* Brown/taupe accent */
+  --primary-foreground: #0a0a0a;
+  --secondary: #2a2a2a;  /* Slightly lighter black */
+  --secondary-foreground: #ebe8de;
+  --muted: #2a2a2a;
+  --muted-foreground: #a89f91;
+  --accent: #8b8375;  /* Darker brown */
+  --accent-foreground: #ebe8de;
+  --destructive: #e07878;
+  --border: #2a2a2a;
+  --input: #2a2a2a;
+  --ring: #a89f91;
+  --chart-1: #a89f91;
+  --chart-2: #8b8375;
+  --chart-3: #6b6b6b;
+  --chart-4: #ebe8de;
+  --chart-5: #d4cfc4;
+  --sidebar: #1a1a1a;
+  --sidebar-foreground: #ebe8de;
+  --sidebar-primary: #a89f91;
+  --sidebar-primary-foreground: #0a0a0a;
+  --sidebar-accent: #2a2a2a;
+  --sidebar-accent-foreground: #ebe8de;
+  --sidebar-border: #2a2a2a;
+  --sidebar-ring: #a89f91;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-background text-foreground;
+  }
 }
