@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { COLORS } from "@/lib/constants/colors";
 
 export function SidebarItem({ item, theme, isCollapsed }: any) {
     const Icon = item.icon;
@@ -33,7 +34,7 @@ export function SidebarItem({ item, theme, isCollapsed }: any) {
                     "w-full gap-4 px-4 py-4 rounded-xl transition-all group text-base font-semibold",
                     isCollapsed ? "justify-center px-2" : "justify-start",
                     isActive &&
-                    "bg-gradient-to-r from-[#a89f91] to-[#8b8375] text-white shadow-md shadow-[#a89f91]/20",
+                    `bg-gradient-to-r ${COLORS.gradients.primary} text-white shadow-md ${COLORS.shadows.primary}`,
                     !isActive &&
                     "text-muted-foreground hover:bg-accent hover:text-foreground"
                 )}

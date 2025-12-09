@@ -16,6 +16,7 @@ import { useTheme } from "next-themes";
 import { SidebarItem } from "./SideBarItem";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { COLORS } from "@/lib/constants/colors";
 import { useEffect, useState } from "react";
 
 const navItems = [
@@ -72,7 +73,7 @@ export function Sidebar() {
                     <SheetContent side="left" className="p-0 w-72 sm:w-80">
                         <SheetHeader className="p-4 border-b">
                             <SheetTitle className="flex items-center gap-2">
-                                <div className="w-8 h-8 bg-gradient-to-br from-[#a89f91] to-[#8b8375] rounded-lg flex items-center justify-center shadow-md">
+                                <div className={`w-8 h-8 bg-gradient-to-br ${COLORS.gradients.primary} rounded-lg flex items-center justify-center shadow-md`}>
                                     <span className="text-white font-semibold">A</span>
                                 </div>
                                 <span className="font-medium">Navigation Menu</span>

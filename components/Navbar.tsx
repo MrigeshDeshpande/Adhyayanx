@@ -11,8 +11,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 import { useTheme } from "next-themes";
+import { COLORS } from "@/lib/constants/colors";
 
 export function Navbar() {
   const [query, setQuery] = useState("");
@@ -46,10 +47,10 @@ export function Navbar() {
       <div className="h-16 px-3 sm:px-4 md:px-6 flex items-center justify-between gap-2 sm:gap-4 md:gap-6">
         {/* Brand */}
         <div className="flex items-center gap-2 flex-shrink-0">
-          <div className="w-24 h-7  bg-gradient-to-br from-[#a89f91] to-[#8b8375] rounded-lg flex items-center justify-center shadow-md">
+          <div className={`w-24 h-7 bg-gradient-to-br ${COLORS.gradients.primary} rounded-lg flex items-center justify-center shadow-md`}>
             <span className="text-white font-semibold text-sm sm:text-base">TeachHub</span>
           </div>
-          
+
         </div>
 
         {/* Search Bar - Hidden on very small screens */}
@@ -69,7 +70,7 @@ export function Navbar() {
               type="submit"
               size="sm"
               disabled={!query.trim() || isLoading}
-              className="rounded-full px-2 sm:px-3 h-7 bg-gradient-to-r from-[#a89f91] to-[#8b8375] hover:opacity-90 text-white"
+              className={`rounded-full px-2 sm:px-3 h-7 bg-gradient-to-r ${COLORS.gradients.primary} hover:opacity-90 text-white`}
             >
               {isLoading ? (
                 <div className="flex items-center gap-1">
@@ -108,10 +109,7 @@ export function Navbar() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="flex items-center gap-2 sm:gap-3 rounded-lg px-2 sm:px-3 py-2 hover:bg-muted transition">
-                <Avatar className="w-7 h-7 sm:w-8 sm:h-8">
-                  <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=teacher" />
-                  <AvatarFallback>PT</AvatarFallback>
-                </Avatar>
+               
                 <div className="hidden lg:block text-left">
                   <div className="text-sm font-medium">Prof. Thompson</div>
                   <div className="text-xs text-muted-foreground">Senior Instructor</div>
