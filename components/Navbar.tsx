@@ -47,14 +47,20 @@ export function Navbar() {
       <div className="h-16 px-3 sm:px-4 md:px-6 flex items-center justify-between gap-2 sm:gap-4 md:gap-6">
         {/* Brand */}
         <div className="flex items-center gap-2 flex-shrink-0">
-          <div className={`w-24 h-7 bg-gradient-to-br ${COLORS.gradients.primary} rounded-lg flex items-center justify-center shadow-md`}>
-            <span className="text-white font-semibold text-sm sm:text-base">TeachHub</span>
+          <div
+            className={`w-24 h-7 bg-gradient-to-br ${COLORS.gradients.primary} rounded-lg flex items-center justify-center shadow-md`}
+          >
+            <span className="text-white font-semibold text-sm sm:text-base">
+              TeachHub
+            </span>
           </div>
-
         </div>
 
         {/* Search Bar - Hidden on very small screens */}
-        <form onSubmit={handleSubmit} className="hidden sm:flex flex-1 max-w-xl">
+        <form
+          onSubmit={handleSubmit}
+          className="hidden sm:flex flex-1 max-w-xl"
+        >
           <div className="w-full flex items-center gap-2 rounded-full px-3 py-1.5 border bg-muted/40 focus-within:border-primary focus-within:bg-background transition-all">
             <Sparkles className="w-4 h-4 text-primary flex-shrink-0" />
             <input
@@ -89,18 +95,30 @@ export function Navbar() {
 
         {/* Right Side Actions */}
         <div className="flex items-center gap-1 sm:gap-2 md:gap-4">
-
           {/* Theme Toggle */}
-          <Button variant="ghost" size="icon" onClick={toggleTheme} className="h-9 w-9">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleTheme}
+            className="h-9 w-9"
+          >
             {mounted ? (
-              theme === "dark" ? <Sun className="w-4 h-4 sm:w-5 sm:h-5" /> : <Moon className="w-4 h-4 sm:w-5 sm:h-5" />
+              theme === "dark" ? (
+                <Sun className="w-4 h-4 sm:w-5 sm:h-5" />
+              ) : (
+                <Moon className="w-4 h-4 sm:w-5 sm:h-5" />
+              )
             ) : (
               <div className="w-4 h-4 sm:w-5 sm:h-5" />
             )}
           </Button>
 
           {/* Notifications - Hidden on small screens */}
-          <Button variant="ghost" size="icon" className="relative h-9 w-9 hidden md:flex">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="relative h-9 w-9 hidden md:flex"
+          >
             <Bell className="w-5 h-5" />
             <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></span>
           </Button>
@@ -109,10 +127,11 @@ export function Navbar() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="flex items-center gap-2 sm:gap-3 rounded-lg px-2 sm:px-3 py-2 hover:bg-muted transition">
-               
                 <div className="hidden lg:block text-left">
                   <div className="text-sm font-medium">Prof. Thompson</div>
-                  <div className="text-xs text-muted-foreground">Senior Instructor</div>
+                  <div className="text-xs text-muted-foreground">
+                    Senior Instructor
+                  </div>
                 </div>
               </button>
             </DropdownMenuTrigger>
@@ -127,7 +146,9 @@ export function Navbar() {
 
               <DropdownMenuSeparator />
 
-              <DropdownMenuItem className="text-destructive">Log out</DropdownMenuItem>
+              <DropdownMenuItem className="text-destructive">
+                Log out
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
