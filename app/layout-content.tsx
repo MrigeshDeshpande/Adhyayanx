@@ -2,7 +2,13 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
-export function LayoutContent({ children }: { children: React.ReactNode }) {
+export function LayoutContent({
+  children,
+  isAuthPage
+}: {
+  children: React.ReactNode;
+  isAuthPage?: boolean;
+}) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [mounted, setMounted] = useState(false);
 
@@ -25,6 +31,11 @@ export function LayoutContent({ children }: { children: React.ReactNode }) {
       window.removeEventListener("sidebar-toggle", handleSidebarToggle);
     };
   }, []);
+
+  // If it's the auth page, don't apply any padding
+  if (isAuthPage) {
+    return <>{children}</>;
+  }
 
   if (!mounted) {
     return (

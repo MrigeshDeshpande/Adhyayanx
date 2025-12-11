@@ -23,36 +23,48 @@ export function AuthForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    console.log("=== FORM SUBMIT START ===");
+    console.log("isSignUp:", isSignUp);
+    console.log("formData:", { ...formData, password: "***" });
 
     // Validation
     if (!formData.email || !formData.password) {
+      console.log("Validation failed: missing email or password");
       setError("Email and password are required");
       return;
     }
 
     if (isSignUp) {
       if (!formData.firstName || !formData.lastName) {
+        console.log("Validation failed: missing name");
         setError("First name and last name are required");
         return;
       }
       if (!formData.acceptTerms) {
+        console.log("Validation failed: terms not accepted");
         setError("You must accept the terms and conditions");
         return;
       }
     }
 
+    console.log("Validation passed, calling auth API...");
     try {
       if (isSignUp) {
+        console.log("Calling signup...");
         await signup({
           email: formData.email,
           password: formData.password,
           firstName: formData.firstName,
           lastName: formData.lastName,
         });
+        console.log("Signup completed successfully");
       } else {
+        console.log("Calling login...");
         await login(formData.email, formData.password);
+        console.log("Login completed successfully");
       }
     } catch (err: any) {
+      console.error("Auth error caught:", err);
       // Handle specific error messages
       const errorMessage = err.message || "An error occurred";
       if (errorMessage.includes("email already in use")) {
@@ -63,6 +75,7 @@ export function AuthForm() {
         setError(errorMessage);
       }
     }
+    console.log("=== FORM SUBMIT END ===");
   };
 
   // Clear error when switching between login and signup
