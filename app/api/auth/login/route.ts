@@ -108,7 +108,15 @@ export async function POST(req: NextRequest) {
     });
 
     // set httpOnly secure cookie for refresh token
-    const res = NextResponse.json({ accessToken });
+    const res = NextResponse.json({
+      accessToken,
+      user: {
+        id: user.id,
+        email: user.email,
+        fullName: user.fullName,
+        role: user.role,
+      }
+    });
     const cookieOptions = {
       httpOnly: true,
       path: "/",

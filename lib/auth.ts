@@ -118,10 +118,10 @@ export async function login(credentials: LoginCredentials): Promise<AuthResponse
 /**
  * Refresh the access token using the refresh token cookie
  * 
- * @returns New access token
+ * @returns Access token and user data (if available)
  * @throws Error if refresh fails
  */
-export async function refreshAccessToken(): Promise<string> {
+export async function refreshAccessToken(): Promise<AuthResponse> {
     const response = await fetch("/api/auth/refresh", {
         method: "POST",
         credentials: "include", // Important: sends the refresh token cookie
@@ -133,7 +133,7 @@ export async function refreshAccessToken(): Promise<string> {
         throw new Error(result.error || "Token refresh failed");
     }
 
-    return result.accessToken;
+    return result;
 }
 
 /**

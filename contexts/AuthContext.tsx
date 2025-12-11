@@ -61,19 +61,28 @@ export function AuthProvider({ children }: AuthProviderProps) {
      */
     const refreshToken = useCallback(async () => {
         try {
-            const newAccessToken = await authApi.refreshAccessToken();
-            setAccessToken(newAccessToken);
+            const response = await authApi.refreshAccessToken();
+            console.log("Refresh API Response:", response);
 
-            // Decode token to get user info
-            const payload = authApi.decodeToken(newAccessToken);
-            if (payload && payload.sub) {
-                // We don't have full user info from token, but we have the ID and role
-                setUser({
-                    id: payload.sub,
-                    email: "", // Will be populated on login/signup
-                    fullName: null,
-                    role: payload.role || "STUDENT",
-                });
+            setAccessToken(response.accessToken);
+
+            // Use user data from API response if available
+            if (response.user) {
+                console.log("Setting user from refresh response:", response.user);
+                setUser(response.user);
+            } else {
+                console.log("No user in refresh response, using token fallback");
+                // Fallback: decode token to get user info
+                const payload = authApi.decodeToken(response.accessToken);
+                if (payload && payload.sub) {
+                    // We don't have full user info from token, but we have the ID and role
+                    setUser({
+                        id: payload.sub,
+                        email: "", 
+                        fullName: null,
+                        role: payload.role || "STUDENT",
+                    });
+                }
             }
         } catch (error) {
             console.error("Token refresh failed:", error);
@@ -82,6 +91,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
             setUser(null);
         }
     }, []);
+
+    /**
+     * Initialize auth state on mount by attempting to refresh token
+     * This restores the user session if a valid refresh token cookie exists
+     */
+    useEffect(() => {
+        // Attempt to refresh token on mount to restore session
+        refreshToken();
+    }, [refreshToken]);
 
     /**
      * Set up automatic token refresh
@@ -107,17 +125,25 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setIsLoading(true);
         try {
             const response = await authApi.login({ email, password });
+            console.log("Login API Response:", response);
             setAccessToken(response.accessToken);
 
-            // Decode token to get user info
-            const payload = authApi.decodeToken(response.accessToken);
-            if (payload && payload.sub) {
-                setUser({
-                    id: payload.sub,
-                    email: email,
-                    fullName: null,
-                    role: payload.role || "STUDENT",
-                });
+            // Use user data from API response if available
+            if (response.user) {
+                console.log("Setting user from API response:", response.user);
+                setUser(response.user);
+            } else {
+                console.log("No user in response, using fallback");
+                // Fallback: decode token to get user info
+                const payload = authApi.decodeToken(response.accessToken);
+                if (payload && payload.sub) {
+                    setUser({
+                        id: payload.sub,
+                        email: email,
+                        fullName: null,
+                        role: payload.role || "STUDENT",
+                    });
+                }
             }
 
             router.push("/");

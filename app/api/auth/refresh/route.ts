@@ -139,7 +139,21 @@ export async function POST(req: NextRequest) {
 
     const newAccess = signAccessToken({ sub: payload.sub, role: payload.role });
 
-    const res = NextResponse.json({ accessToken: newAccess });
+    // Fetch user data to include in response
+    const user = await prisma.user.findUnique({
+      where: { id: payload.sub },
+      select: {
+        id: true,
+        email: true,
+        fullName: true,
+        role: true,
+      }
+    });
+
+    const res = NextResponse.json({
+      accessToken: newAccess,
+      user: user || undefined,
+    });
     res.cookies.set(REFRESH_COOKIE_NAME, newRefresh, {
       httpOnly: true,
       path: "/",
