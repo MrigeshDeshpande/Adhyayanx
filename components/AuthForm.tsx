@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
-import { COLORS } from "@/lib/constants/colors";
+import { COLORS } from "@/lib/constants";
 import { useAuth } from "@/contexts/AuthContext";
 
 export function AuthForm() {

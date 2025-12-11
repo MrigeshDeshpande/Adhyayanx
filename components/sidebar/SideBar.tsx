@@ -22,7 +22,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { COLORS } from "@/lib/constants/colors";
+import { COLORS } from "@/lib/constants";
 import { useEffect, useState } from "react";
 
 const navItems = [

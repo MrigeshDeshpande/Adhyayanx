@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { REFRESH_COOKIE_NAME } from '@/lib/constants';
 
 /**
  * Next.js Middleware for Authentication
@@ -11,7 +12,7 @@ export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
     // Get the refresh token from cookies - must match the cookie name set by login API
-    const refreshToken = request.cookies.get('adx_refresh');
+    const refreshToken = request.cookies.get(REFRESH_COOKIE_NAME);
     const isAuthenticated = !!refreshToken;
 
     // Define public paths that don't require authentication

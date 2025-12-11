@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { useTheme } from "next-themes";
-import { COLORS } from "@/lib/constants/colors";
+import { COLORS } from "@/lib/constants";
 import { useAuth } from "@/contexts/AuthContext";
 
 export function Navbar() {

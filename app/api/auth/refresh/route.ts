@@ -35,12 +35,11 @@ import {
   refreshExpiresSeconds,
 } from "@/lib/jwt";
 import { hashToken, verifyToken } from "@/lib/hash";
-
-/**
- * Name of the refresh token cookie.
- * @constant
- */
-const REFRESH_COOKIE_NAME = "adx_refresh";
+import {
+  REFRESH_COOKIE_NAME,
+  getCookieOptions,
+  AUTH_ERRORS,
+} from "@/lib/constants";
 
 /**
  * POST /api/auth/refresh
@@ -85,14 +84,20 @@ export async function POST(req: NextRequest) {
   try {
     const refreshToken = req.cookies.get(REFRESH_COOKIE_NAME)?.value;
     if (!refreshToken)
-      return NextResponse.json({ error: "no_refresh_token" }, { status: 401 });
+      return NextResponse.json(
+        { error: AUTH_ERRORS.MISSING_TOKEN },
+        { status: 401 }
+      );
 
     // verify signature
     let payload: any;
     try {
       payload = verifyRefreshToken(refreshToken) as any;
     } catch (e) {
-      return NextResponse.json({ error: "invalid_refresh" }, { status: 401 });
+      return NextResponse.json(
+        { error: AUTH_ERRORS.INVALID_TOKEN },
+        { status: 401 }
+      );
     }
 
     // find stored hashed token for user and compare
@@ -113,7 +118,10 @@ export async function POST(req: NextRequest) {
       }
     }
     if (!matched)
-      return NextResponse.json({ error: "refresh_not_found" }, { status: 401 });
+      return NextResponse.json(
+        { error: AUTH_ERRORS.INVALID_TOKEN },
+        { status: 401 }
+      );
 
     // rotate refresh token: revoke old and create new
     await prisma.refreshToken.update({
@@ -154,17 +162,18 @@ export async function POST(req: NextRequest) {
       accessToken: newAccess,
       user: user || undefined,
     });
-    res.cookies.set(REFRESH_COOKIE_NAME, newRefresh, {
-      httpOnly: true,
-      path: "/",
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: refreshExpiresSeconds(),
-    });
+    res.cookies.set(
+      REFRESH_COOKIE_NAME,
+      newRefresh,
+      getCookieOptions(refreshExpiresSeconds())
+    );
 
     return res;
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ error: "internal_error" }, { status: 500 });
+    return NextResponse.json(
+      { error: AUTH_ERRORS.INTERNAL_ERROR },
+      { status: 500 }
+    );
   }
 }

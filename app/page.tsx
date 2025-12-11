@@ -1,6 +1,6 @@
 "use client";
 
-import { COLORS } from "@/lib/constants/colors";
+import { COLORS } from "@/lib/constants";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function Home() {

@@ -22,12 +22,11 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-
-/**
- * Name of the refresh token cookie.
- * @constant
- */
-const REFRESH_COOKIE_NAME = "adx_refresh";
+import {
+  REFRESH_COOKIE_NAME,
+  getCookieOptions,
+  AUTH_ERRORS,
+} from "@/lib/constants";
 
 /**
  * POST /api/auth/logout
@@ -89,14 +88,13 @@ export async function POST(req: NextRequest) {
 
     const res = NextResponse.json({ ok: true });
     // clear cookie
-    res.cookies.set(REFRESH_COOKIE_NAME, "", {
-      httpOnly: true,
-      path: "/",
-      maxAge: 0,
-    });
+    res.cookies.set(REFRESH_COOKIE_NAME, "", getCookieOptions(0));
     return res;
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ error: "internal_error" }, { status: 500 });
+    return NextResponse.json(
+      { error: AUTH_ERRORS.INTERNAL_ERROR },
+      { status: 500 }
+    );
   }
 }

@@ -27,12 +27,11 @@ import {
   signRefreshToken,
   refreshExpiresSeconds,
 } from "@/lib/jwt";
-
-/**
- * Name of the refresh token cookie.
- * @constant
- */
-const REFRESH_COOKIE_NAME = "adx_refresh";
+import {
+  REFRESH_COOKIE_NAME,
+  getCookieOptions,
+  AUTH_ERRORS,
+} from "@/lib/constants";
 
 /**
  * POST /api/auth/login
@@ -71,7 +70,7 @@ export async function POST(req: NextRequest) {
     const { email, password } = await req.json();
     if (!email || !password) {
       return NextResponse.json(
-        { error: "email and password required" },
+        { error: AUTH_ERRORS.MISSING_CREDENTIALS },
         { status: 400 },
       );
     }
@@ -79,7 +78,7 @@ export async function POST(req: NextRequest) {
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user || !user.passwordHash) {
       return NextResponse.json(
-        { error: "invalid_credentials" },
+        { error: AUTH_ERRORS.INVALID_CREDENTIALS },
         { status: 401 },
       );
     }
@@ -87,7 +86,7 @@ export async function POST(req: NextRequest) {
     const ok = await verifyPassword(password, user.passwordHash);
     if (!ok)
       return NextResponse.json(
-        { error: "invalid_credentials" },
+        { error: AUTH_ERRORS.INVALID_CREDENTIALS },
         { status: 401 },
       );
 
@@ -117,19 +116,18 @@ export async function POST(req: NextRequest) {
         role: user.role,
       }
     });
-    const cookieOptions = {
-      httpOnly: true,
-      path: "/",
-      // secure only in prod
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax" as const,
-      maxAge: refreshExpiresSeconds(),
-    };
-    res.cookies.set(REFRESH_COOKIE_NAME, refreshToken, cookieOptions);
+    res.cookies.set(
+      REFRESH_COOKIE_NAME,
+      refreshToken,
+      getCookieOptions(refreshExpiresSeconds())
+    );
 
     return res;
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ error: "internal_error" }, { status: 500 });
+    return NextResponse.json(
+      { error: AUTH_ERRORS.INTERNAL_ERROR },
+      { status: 500 }
+    );
   }
 }
