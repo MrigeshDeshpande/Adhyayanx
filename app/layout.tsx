@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/sidebar/SideBar";
+import { AuthProvider } from "@/contexts/AuthContext";
 import "./globals.css";
 import { LayoutContent } from "./layout-content";
 
@@ -31,16 +32,18 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Navbar />
-          <Sidebar />
-          <LayoutContent>{children}</LayoutContent>
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Navbar />
+            <Sidebar />
+            <LayoutContent>{children}</LayoutContent>
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

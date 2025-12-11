@@ -1,13 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import { COLORS } from "@/lib/constants/colors";
+import { useAuth } from "@/contexts/AuthContext";
 
 export function AuthForm() {
+  const { login, signup, isLoading } = useAuth();
   const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string>("");
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -17,10 +20,55 @@ export function AuthForm() {
     acceptTerms: false,
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    setError("");
+
+    // Validation
+    if (!formData.email || !formData.password) {
+      setError("Email and password are required");
+      return;
+    }
+
+    if (isSignUp) {
+      if (!formData.firstName || !formData.lastName) {
+        setError("First name and last name are required");
+        return;
+      }
+      if (!formData.acceptTerms) {
+        setError("You must accept the terms and conditions");
+        return;
+      }
+    }
+
+    try {
+      if (isSignUp) {
+        await signup({
+          email: formData.email,
+          password: formData.password,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+        });
+      } else {
+        await login(formData.email, formData.password);
+      }
+    } catch (err: any) {
+      // Handle specific error messages
+      const errorMessage = err.message || "An error occurred";
+      if (errorMessage.includes("email already in use")) {
+        setError("This email is already registered. Please login instead.");
+      } else if (errorMessage.includes("invalid_credentials")) {
+        setError("Invalid email or password");
+      } else {
+        setError(errorMessage);
+      }
+    }
   };
+
+  // Clear error when switching between login and signup
+  useEffect(() => {
+    setError("");
+  }, [isSignUp]);
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-white dark:bg-gray-950">
@@ -41,6 +89,12 @@ export function AuthForm() {
                 and editing your onboarding flows.
               </p>
             </div>
+
+            {!isSignUp && error && (
+              <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+              </div>
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
@@ -99,12 +153,13 @@ export function AuthForm() {
 
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-lg font-semibold text-white text-sm uppercase tracking-wide transition-all duration-300 hover:opacity-90 mt-2"
+                disabled={isLoading}
+                className="w-full py-3.5 rounded-lg font-semibold text-white text-sm uppercase tracking-wide transition-all duration-300 hover:opacity-90 mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{
                   background: `linear-gradient(135deg, ${COLORS.palette.brownTaupe} 0%, ${COLORS.palette.darkerBrown} 100%)`,
                 }}
               >
-                Log In
+                {isLoading ? "Logging in..." : "Log In"}
               </button>
 
               <div className="text-center mt-6">
@@ -180,6 +235,12 @@ export function AuthForm() {
                 first onboarding experience.
               </p>
             </div>
+
+            {isSignUp && error && (
+              <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+                <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+              </div>
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
@@ -280,12 +341,13 @@ export function AuthForm() {
 
               <button
                 type="submit"
-                className="w-full py-3.5 rounded-lg font-semibold text-white text-sm uppercase tracking-wide transition-all duration-300 hover:opacity-90 mt-2"
+                disabled={isLoading}
+                className="w-full py-3.5 rounded-lg font-semibold text-white text-sm uppercase tracking-wide transition-all duration-300 hover:opacity-90 mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{
                   background: `linear-gradient(135deg, ${COLORS.palette.brownTaupe} 0%, ${COLORS.palette.darkerBrown} 100%)`,
                 }}
               >
-                Sign Up
+                {isLoading ? "Creating Account..." : "Sign Up"}
               </button>
 
               <div className="text-center mt-6">
