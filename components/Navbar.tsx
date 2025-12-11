@@ -14,12 +14,14 @@ import {
 
 import { useTheme } from "next-themes";
 import { COLORS } from "@/lib/constants/colors";
+import { useAuth } from "@/contexts/AuthContext";
 
 export function Navbar() {
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
+  const { user, logout: handleLogout } = useAuth();
 
   useEffect(() => {
     setMounted(true);
@@ -128,9 +130,11 @@ export function Navbar() {
             <DropdownMenuTrigger asChild>
               <button className="flex items-center gap-2 sm:gap-3 rounded-lg px-2 sm:px-3 py-2 hover:bg-muted transition">
                 <div className="hidden lg:block text-left">
-                  <div className="text-sm font-medium">Prof. Thompson</div>
+                  <div className="text-sm font-medium">
+                    {user?.fullName || user?.email || "User"}
+                  </div>
                   <div className="text-xs text-muted-foreground">
-                    Senior Instructor
+                    {user?.role || "Student"}
                   </div>
                 </div>
               </button>
@@ -146,7 +150,10 @@ export function Navbar() {
 
               <DropdownMenuSeparator />
 
-              <DropdownMenuItem className="text-destructive">
+              <DropdownMenuItem
+                className="text-destructive cursor-pointer"
+                onClick={handleLogout}
+              >
                 Log out
               </DropdownMenuItem>
             </DropdownMenuContent>
