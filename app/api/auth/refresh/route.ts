@@ -37,6 +37,7 @@ import {
 import { hashToken, verifyToken } from "@/lib/hash";
 import {
   REFRESH_COOKIE_NAME,
+  SESSION_COOKIE_NAME,
   getCookieOptions,
   AUTH_ERRORS,
 } from "@/lib/constants";
@@ -167,6 +168,15 @@ export async function POST(req: NextRequest) {
       newRefresh,
       getCookieOptions(refreshExpiresSeconds())
     );
+
+    // Maintain session cookie
+    res.cookies.set(SESSION_COOKIE_NAME, "true", {
+      path: "/",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: refreshExpiresSeconds(),
+      httpOnly: false,
+    });
 
     return res;
   } catch (err) {

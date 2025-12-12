@@ -20,6 +20,14 @@
 export const REFRESH_COOKIE_NAME = "adx_refresh" as const;
 
 /**
+ * Name of the session indicator cookie (not httpOnly).
+ * Used by client to know if a session exists before making API calls.
+ * 
+ * @constant
+ */
+export const SESSION_COOKIE_NAME = "adx_session" as const;
+
+/**
  * Cookie configuration options for refresh token.
  * These options apply security best practices for authentication cookies.
  * 

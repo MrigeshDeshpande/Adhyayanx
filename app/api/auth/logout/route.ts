@@ -24,6 +24,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import {
   REFRESH_COOKIE_NAME,
+  SESSION_COOKIE_NAME,
   getCookieOptions,
   AUTH_ERRORS,
 } from "@/lib/constants";
@@ -89,6 +90,7 @@ export async function POST(req: NextRequest) {
     const res = NextResponse.json({ ok: true });
     // clear cookie
     res.cookies.set(REFRESH_COOKIE_NAME, "", getCookieOptions(0));
+    res.cookies.set(SESSION_COOKIE_NAME, "", { ...getCookieOptions(0), httpOnly: false });
     return res;
   } catch (err) {
     console.error(err);

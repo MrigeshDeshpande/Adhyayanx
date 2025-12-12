@@ -78,14 +78,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
                     // We don't have full user info from token, but we have the ID and role
                     setUser({
                         id: payload.sub,
-                        email: "", 
+                        email: "",
                         fullName: null,
                         role: payload.role || "STUDENT",
                     });
                 }
             }
-        } catch (error) {
-            console.error("Token refresh failed:", error);
+        } catch (error: any) {
+            if (error.message !== "missing refresh token" && error.message !== "no_refresh_token") {
+                console.error("Token refresh failed:", error);
+            }
             // Clear auth state on refresh failure
             setAccessToken(null);
             setUser(null);
@@ -97,8 +99,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
      * This restores the user session if a valid refresh token cookie exists
      */
     useEffect(() => {
-        // Attempt to refresh token on mount to restore session
-        refreshToken();
+        // Check for session cookie to decide whether to attempt refresh
+        // This corresponds to the non-httpOnly 'adx_session' cookie set by the API
+        const hasSessionCookie = document.cookie.split('; ').some(row => row.startsWith('adx_session='));
+
+        if (hasSessionCookie) {
+            refreshToken();
+        }
     }, [refreshToken]);
 
     /**
