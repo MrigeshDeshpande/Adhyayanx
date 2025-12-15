@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -45,17 +44,17 @@
 
 :root {
   --radius: 0.625rem;
-  
+
   /* Light Mode - Beige/Cream theme */
-  --background: #f5f5f0;  /* Light off-white/gray */
-  --foreground: #1a1a1a;  /* Near black for text */
-  --card: #ebe8de;  /* Beige/cream */
+  --background: #f5f5f0; /* Light off-white/gray */
+  --foreground: #1a1a1a; /* Near black for text */
+  --card: #ebe8de; /* Beige/cream */
   --card-foreground: #1a1a1a;
   --popover: #ebe8de;
   --popover-foreground: #1a1a1a;
-  --primary: #a89f91;  /* Brown/taupe */
+  --primary: #a89f91; /* Brown/taupe */
   --primary-foreground: #ffffff;
-  --secondary: #d4cfc4;  /* Light taupe */
+  --secondary: #d4cfc4; /* Light taupe */
   --secondary-foreground: #1a1a1a;
   --muted: #d4cfc4;
   --muted-foreground: #6b6b6b;
@@ -82,19 +81,19 @@
 
 .dark {
   /* Dark Mode - Black/Brown theme */
-  --background: #0a0a0a;  /* Pure black */
-  --foreground: #ebe8de;  /* Beige for text */
-  --card: #1a1a1a;  /* Dark gray/black */
+  --background: #0a0a0a; /* Pure black */
+  --foreground: #ebe8de; /* Beige for text */
+  --card: #1a1a1a; /* Dark gray/black */
   --card-foreground: #ebe8de;
   --popover: #1a1a1a;
   --popover-foreground: #ebe8de;
-  --primary: #a89f91;  /* Brown/taupe accent */
+  --primary: #a89f91; /* Brown/taupe accent */
   --primary-foreground: #0a0a0a;
-  --secondary: #2a2a2a;  /* Slightly lighter black */
+  --secondary: #2a2a2a; /* Slightly lighter black */
   --secondary-foreground: #ebe8de;
   --muted: #2a2a2a;
   --muted-foreground: #a89f91;
-  --accent: #8b8375;  /* Darker brown */
+  --accent: #8b8375; /* Darker brown */
   --accent-foreground: #ebe8de;
   --destructive: #e07878;
   --border: #2a2a2a;
