@@ -21,6 +21,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { hashPassword } from "@/lib/hash";
+import { AUTH_ERRORS } from "@/lib/constants";
 
 /**
  * POST /api/auth/signup
@@ -94,6 +95,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ user }, { status: 201 });
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ error: "internal_error" }, { status: 500 });
+    return NextResponse.json({ error: AUTH_ERRORS.INTERNAL_ERROR }, { status: 500 });
   }
 }

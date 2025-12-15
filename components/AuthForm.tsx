@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Eye, EyeOff } from "lucide-react";
 import { COLORS } from "@/lib/constants";
 import { useAuth } from "@/contexts/AuthContext";
+import Link from "next/link";
 
 export function AuthForm() {
   const { login, signup, isLoading } = useAuth();
@@ -155,13 +156,13 @@ export function AuthForm() {
                     Remember Me
                   </span>
                 </label>
-                <button
-                  type="button"
+                <Link
+                  href="/auth/forgot-password"
                   className="text-sm hover:underline"
                   style={{ color: COLORS.palette.brownTaupe }}
                 >
                   Forgot password
-                </button>
+                </Link>
               </div>
 
               <button

@@ -21,6 +21,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { verifyToken, hashPassword } from "@/lib/hash";
+import { AUTH_ERRORS } from "@/lib/constants";
 
 /**
  * POST /api/auth/reset-password
@@ -97,6 +98,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ error: "internal_error" }, { status: 500 });
+    return NextResponse.json({ error: AUTH_ERRORS.INTERNAL_ERROR }, { status: 500 });
   }
 }
+

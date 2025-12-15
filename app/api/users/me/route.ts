@@ -16,6 +16,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { verifyAccessToken } from "@/lib/jwt";
+import { AUTH_ERRORS } from "@/lib/constants";
 
 /**
  * GET /api/users/me
@@ -84,6 +85,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ user });
   } catch (err) {
     console.error(err);
-    return NextResponse.json({ error: "internal_error" }, { status: 500 });
+    return NextResponse.json({ error: AUTH_ERRORS.INTERNAL_ERROR }, { status: 500 });
   }
 }

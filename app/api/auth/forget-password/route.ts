@@ -24,6 +24,7 @@ import crypto from "crypto";
 import { prisma } from "@/lib/prisma";
 import { hashToken } from "@/lib/hash";
 import { sendEmail } from "@/lib/email";
+import { AUTH_ERRORS } from "@/lib/constants";
 
 /**
  * POST /api/auth/forget-password
@@ -60,22 +61,40 @@ import { sendEmail } from "@/lib/email";
  * @returns JSON response indicating success or error
  */
 export async function POST(req: NextRequest) {
-  try {
-    const { email } = await req.json();
-    if (!email)
-      return NextResponse.json({ error: "email required" }, { status: 400 });
+  console.log("[FORGOT_PASSWORD] Request received");
 
-    const user = await prisma.user.findUnique({ where: { email } });
-    if (!user) {
-      // don't reveal user absence — respond ok
+  try {
+    console.log("[FORGOT_PASSWORD] Parsing request body");
+    const body = await req.json();
+    console.log("[FORGOT_PASSWORD] Body parsed:", body);
+
+    const { email } = body;
+
+    if (!email) {
+      console.warn("[FORGOT_PASSWORD] No email provided");
       return NextResponse.json({ ok: true });
     }
 
-    // create a reset token, hash it, store hashed + expiry
-    const token = crypto.randomBytes(32).toString("hex");
-    const tokenHash = await hashToken(token);
-    const expiresAt = new Date(Date.now() + 1000 * 60 * 60); // 1 hour
+    console.log("[FORGOT_PASSWORD] Looking up user for email:", email);
+    const user = await prisma.user.findUnique({ where: { email } });
 
+    if (!user) {
+      console.warn("[FORGOT_PASSWORD] No user found for email:", email);
+      return NextResponse.json({ ok: true });
+    }
+
+    console.log("[FORGOT_PASSWORD] User found. Generating reset token");
+
+    const token = crypto.randomBytes(32).toString("hex");
+    console.log("[FORGOT_PASSWORD] Token generated");
+
+    const tokenHash = await hashToken(token);
+    console.log("[FORGOT_PASSWORD] Token hashed");
+
+    const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
+    console.log("[FORGOT_PASSWORD] Token expiry set:", expiresAt.toISOString());
+
+    console.log("[FORGOT_PASSWORD] Updating user record with reset token");
     await prisma.user.update({
       where: { id: user.id },
       data: {
@@ -84,17 +103,32 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // send email with reset link (APP_URL should be set)
-    const resetUrl = `${process.env.APP_URL}/reset-password?token=${token}&email=${encodeURIComponent(email)}`;
-    await sendEmail(
+    console.log("[FORGOT_PASSWORD] User record updated successfully");
+
+    const appUrl = process.env.APP_URL || "http://localhost:3000";
+    console.log("[FORGOT_PASSWORD] APP_URL:", appUrl);
+
+    const resetUrl = `${appUrl}/reset-password?token=${token}&email=${encodeURIComponent(email)}`;
+    console.log("[FORGOT_PASSWORD] Reset URL generated");
+
+    console.log("[FORGOT_PASSWORD] Attempting to send reset email");
+    sendEmail(
       email,
       "Password reset for AdhyayanX",
       `Click here to reset: ${resetUrl}`,
-    );
+    ).then(() => {
+      console.log("[FORGOT_PASSWORD] Reset email send initiated");
+    }).catch((err) => {
+      console.error("[FORGOT_PASSWORD] Email send failed:", err);
+    });
+
+    console.log("[FORGOT_PASSWORD] Flow completed, returning OK");
+    return NextResponse.json({ ok: true });
+
+  } catch (err) {
+    console.error("[FORGOT_PASSWORD] Unhandled error:", err);
+    console.log("[FORGOT_PASSWORD] Returning OK despite error (security)");
 
     return NextResponse.json({ ok: true });
-  } catch (err) {
-    console.error(err);
-    return NextResponse.json({ error: "internal_error" }, { status: 500 });
   }
 }

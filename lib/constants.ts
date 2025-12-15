@@ -95,7 +95,7 @@ export const AUTH_ERRORS = {
     INVALID_CREDENTIALS: "invalid_credentials",
     MISSING_TOKEN: "missing refresh token",
     INVALID_TOKEN: "invalid or expired token",
-    INTERNAL_ERROR: "internal_error",
+    INTERNAL_ERROR: "bsdk nahi ja rha ye",
     EMAIL_IN_USE: "email already in use",
 } as const;
 
