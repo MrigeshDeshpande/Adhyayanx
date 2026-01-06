@@ -26,7 +26,7 @@ import { COLORS } from "@/lib/constants";
 import { useEffect, useState } from "react";
 
 const navItems = [
-  { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard" },
+  { icon: LayoutDashboard, label: "Dashboard", href: "/" },
   { icon: Users, label: "My Batches", href: "/batches" },
   { icon: Upload, label: "Upload PDF", href: "/upload" },
   { icon: FileText, label: "Reports", href: "/reports" },
@@ -82,7 +82,7 @@ export function Sidebar() {
             <SheetHeader className="p-4 border-b">
               <SheetTitle className="flex items-center gap-2">
                 <div
-                  className={`w-8 h-8 bg-gradient-to-br ${COLORS.gradients.primary} rounded-lg flex items-center justify-center shadow-md`}
+                  className={`w-8 h-8 bg-gradient-to-br ${COLORS.palette.brownTaupe} rounded-lg flex items-center justify-center shadow-md`}
                 >
                   <span className="text-white font-semibold">A</span>
                 </div>

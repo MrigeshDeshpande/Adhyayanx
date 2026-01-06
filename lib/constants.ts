@@ -195,6 +195,20 @@ export const COLORS = {
      */
     gradients: {
         primary: "from-[#a89f91] to-[#8b8375]", // Brown/taupe gradient
+
+        // Vibrant gradients for modern UI
+        purple: "from-[#a855f7] to-[#7c3aed]", // Purple gradient
+        blue: "from-[#3b82f6] to-[#2563eb]", // Blue gradient
+        cyan: "from-[#06b6d4] to-[#0891b2]", // Cyan gradient
+        pink: "from-[#ec4899] to-[#db2777]", // Pink gradient
+        orange: "from-[#f97316] to-[#ea580c]", // Orange gradient
+        green: "from-[#10b981] to-[#059669]", // Green gradient
+        yellow: "from-[#eab308] to-[#ca8a04]", // Yellow gradient
+        red: "from-[#ef4444] to-[#dc2626]", // Red gradient
+
+        // Multi-color gradients
+        sunset: "from-[#f97316] via-[#ec4899] to-[#a855f7]", // Sunset gradient
+        ocean: "from-[#06b6d4] via-[#3b82f6] to-[#7c3aed]", // Ocean gradient
     },
 
     /**
@@ -202,8 +216,38 @@ export const COLORS = {
      */
     shadows: {
         primary: "shadow-[#a89f91]/20", // Brown shadow with 20% opacity
+        purple: "shadow-[#a855f7]/30",
+        blue: "shadow-[#3b82f6]/30",
+        cyan: "shadow-[#06b6d4]/30",
+        pink: "shadow-[#ec4899]/30",
+        orange: "shadow-[#f97316]/30",
+        green: "shadow-[#10b981]/30",
+    },
+
+    /**
+     * Semantic colors for dashboard components
+     */
+    semantic: {
+        // Status colors
+        success: "#10b981", // Green for success
+        warning: "#eab308", // Yellow for warnings
+        critical: "#ef4444", // Red for critical
+        info: "#3b82f6", // Blue for info
+
+        // KPI card gradients
+        kpi: {
+            purple: { from: "#a855f7", to: "#7c3aed" },
+            blue: { from: "#3b82f6", to: "#2563eb" },
+            cyan: { from: "#06b6d4", to: "#0891b2" },
+            green: { from: "#10b981", to: "#059669" },
+            orange: { from: "#f97316", to: "#ea580c" },
+            pink: { from: "#ec4899", to: "#db2777" },
+        },
     },
 } as const;
+
+
+
 
 /**
  * Type for accessing color palette
