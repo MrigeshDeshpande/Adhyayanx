@@ -11,7 +11,8 @@ The goal of this project is to streamline tasks such as:
 - Creating revision material
 - Planning next-day lesson
 - Preparing daily student reports
-- Mapping and tracking 
+- Mapping and tracking
+
 
 **v1 is built entirely using Next.js** to move fast and keep everything in a single codebase.
 The architecture is intentionally simple but structured so that heavy processing tasks can be moved to separate services in future versions.
