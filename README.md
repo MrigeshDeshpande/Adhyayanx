@@ -9,7 +9,7 @@ The goal of this project is to streamline tasks such as:
 
 - Generating class notes
 - Creating revision material
-- Planning next-day lessons
+- Planning next-day lesson
 - Preparing daily student reports
 - Mapping and tracking 
 
