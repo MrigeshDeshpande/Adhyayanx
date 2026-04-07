@@ -7,6 +7,7 @@
 AdhyayanX is an AI-driven platform designed to help coaching institutes and teachers automate their daily academic operations.
 The goal of this project is to streamline tasks such as:
 
+
 - Generating class notes
 - Creating revision material
 - Planning next-day lesson
