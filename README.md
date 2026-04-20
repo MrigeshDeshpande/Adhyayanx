@@ -2,10 +2,6 @@
 
 
 
-
-
-
-
 # **AdhyayanX — AI-Powered Teaching Assistant (v1)**
 
 AdhyayanX is an AI-driven platform designed to help coaching institutes and teachers automate their daily academic operations.
