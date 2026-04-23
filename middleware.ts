@@ -7,6 +7,9 @@ import { REFRESH_COOKIE_NAME } from '@/lib/constants';
  * 
  * Protects routes by checking for the presence of a refresh token cookie.
  * Redirects unauthenticated users to /auth and authenticated users away from /auth.
+ * 
+ * Note: Role-based access control is now handled via client-side conditional rendering
+ * on the home page, so no server-side role checks are needed here.
  */
 export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;

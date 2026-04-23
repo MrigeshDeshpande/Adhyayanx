@@ -24,49 +24,36 @@ export function AuthForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    console.log("=== FORM SUBMIT START ===");
-    console.log("isSignUp:", isSignUp);
-    console.log("formData:", { ...formData, password: "***" });
 
     // Validation
     if (!formData.email || !formData.password) {
-      console.log("Validation failed: missing email or password");
       setError("Email and password are required");
       return;
     }
 
     if (isSignUp) {
       if (!formData.firstName || !formData.lastName) {
-        console.log("Validation failed: missing name");
         setError("First name and last name are required");
         return;
       }
       if (!formData.acceptTerms) {
-        console.log("Validation failed: terms not accepted");
         setError("You must accept the terms and conditions");
         return;
       }
     }
 
-    console.log("Validation passed, calling auth API...");
     try {
       if (isSignUp) {
-        console.log("Calling signup...");
         await signup({
           email: formData.email,
           password: formData.password,
           firstName: formData.firstName,
           lastName: formData.lastName,
         });
-        console.log("Signup completed successfully");
       } else {
-        console.log("Calling login...");
         await login(formData.email, formData.password);
-        console.log("Login completed successfully");
       }
     } catch (err: any) {
-      console.error("Auth error caught:", err);
-      // Handle specific error messages
       const errorMessage = err.message || "An error occurred";
       if (errorMessage.includes("email already in use")) {
         setError("This email is already registered. Please login instead.");
@@ -76,7 +63,6 @@ export function AuthForm() {
         setError(errorMessage);
       }
     }
-    console.log("=== FORM SUBMIT END ===");
   };
 
   // Clear error when switching between login and signup
@@ -85,7 +71,7 @@ export function AuthForm() {
   }, [isSignUp]);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-white dark:bg-gray-950">
+    <div className="relative w-full h-screen overflow-hidden bg-background">
       {/* Split Container */}
       <div className="relative w-full h-full flex">
         {/* Left Half - Login Form */}
@@ -94,10 +80,10 @@ export function AuthForm() {
             className={`w-full max-w-md transition-opacity duration-300 ${isSignUp ? "opacity-0 pointer-events-none" : "opacity-100"}`}
           >
             <div className="mb-8">
-              <h2 className="text-4xl font-bold mb-3 text-gray-900 dark:text-white">
+              <h2 className="text-4xl font-bold mb-3 text-foreground">
                 Log in to Your Account
               </h2>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-sm text-muted-foreground">
                 Log in to your account so you can continue building
                 <br />
                 and editing your onboarding flows.
@@ -105,14 +91,14 @@ export function AuthForm() {
             </div>
 
             {!isSignUp && error && (
-              <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-                <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+              <div className="mb-4 p-3 bg-destructive/10 dark:bg-destructive/20 border border-destructive rounded-lg">
+                <p className="text-sm text-destructive">{error}</p>
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   Email
                 </label>
                 <input
@@ -122,12 +108,12 @@ export function AuthForm() {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-all"
+                  className="w-full px-4 py-3 bg-muted border border-border rounded-lg text-sm placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50 transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   Password
                 </label>
                 <input
@@ -137,7 +123,7 @@ export function AuthForm() {
                   onChange={(e) =>
                     setFormData({ ...formData, password: e.target.value })
                   }
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-all"
+                  className="w-full px-4 py-3 bg-muted border border-border rounded-lg text-sm placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50 transition-all"
                 />
               </div>
 
@@ -149,10 +135,10 @@ export function AuthForm() {
                     onChange={(e) =>
                       setFormData({ ...formData, rememberMe: e.target.checked })
                     }
-                    className="w-4 h-4 rounded border-gray-300 mr-2"
+                    className="w-4 h-4 rounded border-border mr-2"
                     style={{ accentColor: COLORS.palette.brownTaupe }}
                   />
-                  <span className="text-gray-700 dark:text-gray-300">
+                  <span className="text-foreground">
                     Remember Me
                   </span>
                 </label>
@@ -177,13 +163,13 @@ export function AuthForm() {
               </button>
 
               <div className="text-center mt-6">
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                <p className="text-sm text-muted-foreground mb-4">
                   Or log in using
                 </p>
                 <div className="flex gap-4 justify-center">
                   <button
                     type="button"
-                    className="w-12 h-12 rounded-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
+                    className="w-12 h-12 rounded-lg border border-border flex items-center justify-center hover:bg-muted/50 transition-colors"
                   >
                     <svg className="w-5 h-5" viewBox="0 0 24 24">
                       <path
@@ -206,7 +192,7 @@ export function AuthForm() {
                   </button>
                   <button
                     type="button"
-                    className="w-12 h-12 rounded-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
+                    className="w-12 h-12 rounded-lg border border-border flex items-center justify-center hover:bg-muted/50 transition-colors"
                   >
                     <svg
                       className="w-5 h-5"
@@ -240,10 +226,10 @@ export function AuthForm() {
             className={`w-full max-w-md transition-opacity duration-300 ${isSignUp ? "opacity-100" : "opacity-0 pointer-events-none"}`}
           >
             <div className="mb-8">
-              <h2 className="text-4xl font-bold mb-3 text-gray-900 dark:text-white">
+              <h2 className="text-4xl font-bold mb-3 text-foreground">
                 Sign Up for an Account
               </h2>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+              <p className="text-sm text-muted-foreground">
                 Let's get you all set up so you can start creating your
                 <br />
                 first onboarding experience.
@@ -251,15 +237,15 @@ export function AuthForm() {
             </div>
 
             {isSignUp && error && (
-              <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
-                <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+              <div className="mb-4 p-3 bg-destructive/10 dark:bg-destructive/20 border border-destructive rounded-lg">
+                <p className="text-sm text-destructive">{error}</p>
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     First Name
                   </label>
                   <input
@@ -269,11 +255,11 @@ export function AuthForm() {
                     onChange={(e) =>
                       setFormData({ ...formData, firstName: e.target.value })
                     }
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-all"
+                    className="w-full px-4 py-3 bg-muted border border-border rounded-lg text-sm placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50 transition-all"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     Last Name
                   </label>
                   <input
@@ -283,13 +269,13 @@ export function AuthForm() {
                     onChange={(e) =>
                       setFormData({ ...formData, lastName: e.target.value })
                     }
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-all"
+                    className="w-full px-4 py-3 bg-muted border border-border rounded-lg text-sm placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50 transition-all"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   Email
                 </label>
                 <input
@@ -299,12 +285,12 @@ export function AuthForm() {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-all"
+                  className="w-full px-4 py-3 bg-muted border border-border rounded-lg text-sm placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50 transition-all"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   Password
                 </label>
                 <div className="relative">
@@ -315,12 +301,12 @@ export function AuthForm() {
                     onChange={(e) =>
                       setFormData({ ...formData, password: e.target.value })
                     }
-                    className="w-full px-4 py-3 pr-12 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-all"
+                    className="w-full px-4 py-3 pr-12 bg-muted border border-border rounded-lg text-sm placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-opacity-50 transition-all"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                   >
                     {showPassword ? (
                       <EyeOff className="w-5 h-5" />
@@ -338,10 +324,10 @@ export function AuthForm() {
                   onChange={(e) =>
                     setFormData({ ...formData, acceptTerms: e.target.checked })
                   }
-                  className="w-4 h-4 rounded border-gray-300 mt-0.5 mr-2"
+                  className="w-4 h-4 rounded border-border mt-0.5 mr-2"
                   style={{ accentColor: COLORS.palette.brownTaupe }}
                 />
-                <span className="text-gray-700 dark:text-gray-300">
+                <span className="text-foreground">
                   I accept BoardMe's{" "}
                   <button
                     type="button"
@@ -365,13 +351,13 @@ export function AuthForm() {
               </button>
 
               <div className="text-center mt-6">
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                <p className="text-sm text-muted-foreground mb-4">
                   Or sign up using
                 </p>
                 <div className="flex gap-4 justify-center">
                   <button
                     type="button"
-                    className="w-12 h-12 rounded-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors"
+                    className="w-12 h-12 rounded-lg border border-border flex items-center justify-center hover:bg-muted/50 transition-colors"
                   >
                     <svg className="w-5 h-5" viewBox="0 0 24 24">
                       <path
